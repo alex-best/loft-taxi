@@ -1,0 +1,13 @@
+.Header {
+    width: 100vw;
+    padding: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 0px 10px 0px rgba(0, 0, 0, .3);
+    position: fixed;
+}
+
+.Header_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
