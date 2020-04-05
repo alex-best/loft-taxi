@@ -5,8 +5,6 @@ import SignupPage from './Pages/SignupPage/SignupPage';
 import MapPage from './Pages/MapPage/MapPage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 
-import "./App.css";
-
 class App extends Component {
     state = {
         currentPage: pagesData.login.id
