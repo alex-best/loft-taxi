@@ -17,15 +17,11 @@ class App extends Component {
 	};
 	
 	onLoginHandler = () => {
-		this.setState({
-			currentPage: pagesData.map.id
-		})
+		this.onPageChangeHandler(pagesData.map.id);
 	}
 
 	onSignupHandler = () => {
-		this.setState({
-			currentPage: pagesData.map.id
-		})
+		this.onPageChangeHandler(pagesData.map.id);
 	}
 
     render() {
