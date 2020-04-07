@@ -1,6 +1,11 @@
 import React from "react";
-
-import "./LoginForm.css";
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from "@material-ui/core/Button";
+import Link from '@material-ui/core/Link';
+import styles from '../../AppData/regFormStyles';
+import { withStyles } from '@material-ui/core/styles';
 
 const LoginForm = props => {
     const submitHandler = e => {
@@ -17,38 +22,23 @@ const LoginForm = props => {
 		}
     };
 
+    const { classes } = props;
+
     return (
-        <div className="Login_form login-form">
-            <div className="login-form_header">
-                <h2>Войти</h2>
-                <span>
-                    Новый пользователь?&nbsp;
-                    <a
-						href="/signup"
-						id="signup"
-                        onClick={onClickHandler}
-                    >
-                        Зарегистрируйтесь
-                    </a>
-                </span>
-            </div>
-            <div className="login-form_form">
-                <form onSubmit={submitHandler}>
-                    <input
-                        type="text"
-                        id="login-input-username"
-                        placeholder="Имя пользователя*"
-                    />
-                    <input
-                        type="password"
-                        id="login-input-password"
-                        placeholder="Пароль*"
-                    />
-                    <button type="submit">Войти</button>
-                </form>
-            </div>
-        </div>
+        <Grid container>
+            <Grid item xs={12}>
+                <Paper className={classes.root}>
+                    <h2>Войти</h2>
+                    <span>Новый пользователь?&nbsp;<Link href="/signup" id="signup" onClick={onClickHandler}>Зарегистрируйтесь</Link></span>
+                    <form className={classes.form} onSubmit={submitHandler}>
+                        <TextField fullWidth={true} margin={'normal'} label="Имя пользователя*" />
+                        <TextField fullWidth={true} margin={'normal'} label="Пароль*" />
+                        <Button type="submit" className={classes.button} variant="contained" color="primary" >Войти</Button>
+                    </form>
+                </Paper>
+            </Grid>
+        </Grid>
     );
 };
 
-export default LoginForm;
+export default withStyles(styles)(LoginForm);

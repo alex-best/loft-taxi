@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Container from "../../Components/Container/Container";
+import Grid from '@material-ui/core/Grid';
 
 import background from "./background.jpg";
 import logo from "./logo.png";
@@ -10,18 +11,16 @@ class RegLayout extends Component {
     render() {
         return (
             <div className="Login" style={{ background: `url(${background})` }}>
-                <Container>
-                    <div className="Login_row">
-                        <div className="col-left">
-                            <div className="Login_logotype">
-                                <img src={logo} alt="Loft Taxi" />
-                            </div>
+                <Grid container> 
+                    <Grid container xs={6} justify="center" alignItems="center">
+                        <div className="Login_logotype">
+                            <img src={logo} alt="Loft Taxi" />
                         </div>
-                        <div className="col-right">
-							{ this.props.children }
-                        </div>
-                    </div>
-                </Container>
+                    </Grid>
+                    <Grid item xs={6}>
+                        {this.props.children}
+                    </Grid>
+                </Grid>
             </div>
         );
     }

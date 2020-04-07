@@ -1,4 +1,11 @@
 import React from "react";
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from "@material-ui/core/Button";
+import Link from '@material-ui/core/Link';
+import styles from '../../AppData/regFormStyles';
+import { withStyles } from '@material-ui/core/styles';
 
 import "./SignupForm.css";
 
@@ -17,44 +24,33 @@ const SignupForm = props => {
 		}
     };
 
+    const { classes } = props;
+
     return (
-        <div className="Signup_form signup-form">
-            <div className="signup-form_header">
-                <h2>Регистрация</h2>
-                <span>
-                    Уже зарегистрированы?&nbsp;
-                    <a href="/login" id="login" onClick={onClickHandler}>
-                        Войти
-                    </a>
-                </span>
-            </div>
-            <div className="signup-form_form">
-                <form onSubmit={submitHandler}>
-                    <input
-                        type="email"
-                        id="signup-input-email"
-                        placeholder="Адрес электронной почты"
-                    />
-                    <input
-                        type="text"
-                        id="signup-input-firstname"
-                        placeholder="Имя"
-                    />
-                    <input
-                        type="text"
-                        id="signup-input-lastname"
-                        placeholder="Фамилия"
-                    />
-                    <input
-                        type="password"
-                        id="signup-input-password"
-                        placeholder="Пароль"
-                    />
-                    <button type="submit">Зарегистрироваться</button>
-                </form>
-            </div>
-        </div>
+        <Grid container>
+            <Paper className={classes.root}>
+                <Grid item xs={12}>
+                    <h2>Зарегистрироваться</h2>
+                    <span>Уже зарегистрированы?&nbsp;<Link href="/login" id="login" onClick={onClickHandler}>Войти</Link></span>
+                </Grid>
+                <Grid item xs={12}>
+                    <form className={classes.form} onSubmit={submitHandler}>
+                        <TextField fullWidth={true} margin={'normal'} label="Адрес электронной почты" />
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <TextField margin={'normal'} label="Имя"/>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField margin={'normal'} label="Фамилия" />
+                            </Grid>
+                        </Grid>
+                        <TextField fullWidth={true} margin={'normal'} label="Пароль" />
+                        <Button type="submit" className={classes.button} variant="contained" color="primary" >Зарегистрироваться</Button>
+                    </form>
+                </Grid>
+            </Paper>
+        </Grid>
     );
 };
 
-export default SignupForm;
+export default withStyles(styles)(SignupForm);

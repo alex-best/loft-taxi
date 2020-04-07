@@ -6,6 +6,7 @@ import MapPage from './Pages/MapPage/MapPage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 
 class App extends Component {
+
     state = {
         currentPage: pagesData.login.id
     };
