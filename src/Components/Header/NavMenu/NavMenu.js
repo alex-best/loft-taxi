@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import pagesData from "../../../AppData/pages";
 import Button from "@material-ui/core/Button";
+import { AuthContext } from '../../../Contexts/AuthContext';
 
 import "./NavMenu.css";
 
 const NavMenu = (props) => {
+
+    const auth = useContext(AuthContext);
+
     const navItems = [
         {
             ...pagesData.map,
@@ -25,6 +29,9 @@ const NavMenu = (props) => {
         const pageId = e.target.closest(".nav-link").id;
 
         if (pageId) {
+            if (pageId === 'login') {
+                auth.logout();
+            }
             props.onPageChange(pageId);
         }
     };

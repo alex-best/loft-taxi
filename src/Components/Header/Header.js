@@ -1,9 +1,6 @@
 import React from "react";
-import Container from "../Container/Container";
 import NavMenu from "./NavMenu/NavMenu";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import { AppBar, Typography, Toolbar } from "@material-ui/core";
 import { Logo } from "loft-taxi-mui-theme";
 import { withStyles } from '@material-ui/core/styles';
 
@@ -13,11 +10,11 @@ const styles = {
 	}
 }
 
-const Header = (props) => {
+const Header = props => {
     const { classes } = props;
 
     return (
-        <AppBar color="default">
+        <AppBar position="static" color="default">
             <Toolbar>
                 <Typography className={classes.root}>
                     <Logo />

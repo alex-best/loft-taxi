@@ -1,18 +1,20 @@
 import React from "react";
 import MainLayout from "../../Layout/MainLayout/MainLayout";
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
+import Map from '../../Components/Map/Map';
+import PropTypes from 'prop-types';
 
 import "./MapPage.css";
 
 const MapPage = props => {
     return (
         <MainLayout onPageChange={props.onPageChange}>
-            <div className="Map">
-                <h1>MAP</h1>
-            </div>
+            <Map/>
         </MainLayout>
     );
 };
+
+MapPage.propTypes = {
+    onPageChange: PropTypes.func.isRequired
+}
 
 export default MapPage;
