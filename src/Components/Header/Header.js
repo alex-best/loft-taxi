@@ -1,24 +1,28 @@
 import React from "react";
-import Container from "../Container/Container";
 import NavMenu from "./NavMenu/NavMenu";
+import { AppBar, Typography, Toolbar } from "@material-ui/core";
+import { Logo } from "loft-taxi-mui-theme";
+import { withStyles } from '@material-ui/core/styles';
 
-import logo from "./logo.png";
-import "./Header.css";
+const styles = {
+	root: {
+		flexGrow: 1
+	}
+}
 
 const Header = props => {
+    const { classes } = props;
 
     return (
-        <header className="Header">
-            <Container>
-                <div className="Header_row">
-                    <div className="Header_logo">
-                        <img src={logo} alt="Loft Taxi" />
-                    </div>
-                    <NavMenu onPageChange={props.onPageChange} />
-                </div>
-            </Container>
-        </header>
+        <AppBar position="static" color="default">
+            <Toolbar>
+                <Typography className={classes.root}>
+                    <Logo />
+                </Typography>
+				<NavMenu onPageChange={props.onPageChange}/>
+            </Toolbar>
+        </AppBar>
     );
 };
 
-export default Header;
+export default withStyles(styles)(Header);

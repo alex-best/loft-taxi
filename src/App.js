@@ -1,56 +1,54 @@
-import React, { Component } from "react";
-import pagesData from './AppData/pages';
-import LoginPage from './Pages/LoginPage/LoginPage';
-import SignupPage from './Pages/SignupPage/SignupPage';
-import MapPage from './Pages/MapPage/MapPage';
-import ProfilePage from './Pages/ProfilePage/ProfilePage';
+import React, { useContext, useState } from "react";
+import pagesData from "./AppData/pages";
+import LoginPage from "./Pages/LoginPage/LoginPage";
+import SignupPage from "./Pages/SignupPage/SignupPage";
+import MapPage from "./Pages/MapPage/MapPage";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage";
+import { AuthContext } from "./Contexts/AuthContext";
 
-class App extends Component {
-    state = {
-        currentPage: pagesData.login.id
+const App = props => {
+	const auth = useContext(AuthContext);
+
+    const [pages, setPagesData] = useState(props.pages);
+    const [currentPage, setCurrentPage] = useState(props.initialPage);
+
+    const onPageChangeHandler = (pageId) => {
+        setCurrentPage(pageId);
     };
 
-    onPageChangeHandler = pageType => {
-        this.setState({
-            currentPage: pageType
-        });
-	};
-	
-	onLoginHandler = () => {
-		this.onPageChangeHandler(pagesData.map.id);
-	}
+    let Component = null;
 
-	onSignupHandler = () => {
-		this.onPageChangeHandler(pagesData.map.id);
-	}
+    switch (currentPage) {
+        case pages.map.id:
+            Component = <MapPage onPageChange={onPageChangeHandler} />;
+            break;
+        case pages.profile.id:
+            Component = <ProfilePage onPageChange={onPageChangeHandler} />;
+            break;
+        default:
+            break;
+    }
 
-    render() {
-		const { currentPage } = this.state;
-		let Component = null;
-
+    if (!auth.isLoggedIn) {
 		switch (currentPage) {
-			case pagesData.login.id:
-				Component = <LoginPage onSubmit={this.onLoginHandler} onPageChange={this.onPageChangeHandler}/>
+			case pages.login.id:
+				Component = <LoginPage onPageChange={onPageChangeHandler} />;
 				break;
-			case pagesData.signup.id:
-				Component = <SignupPage onSubmit={this.onSignupHandler} onPageChange={this.onPageChangeHandler}/>
-				break;
-			case pagesData.map.id:
-				Component = <MapPage onPageChange={this.onPageChangeHandler} />
-				break;
-			case pagesData.profile.id:
-				Component = <ProfilePage onPageChange={this.onPageChangeHandler} />
+			case pages.signup.id:
+				Component = <SignupPage onPageChange={onPageChangeHandler} />;
 				break;
 			default:
+				Component = <LoginPage onPageChange={onPageChangeHandler} />;
 				break;
-		} 
+		}
+	}
 
-        return (
-            <div className="App">
-				{Component}
-            </div>
-        );
-    }
+    return <div data-testid="App" className="App">{Component}</div>;
+};
+
+App.defaultProps = {
+    pages: pagesData,
+    initialPage: pagesData.login.id
 }
 
 export default App;

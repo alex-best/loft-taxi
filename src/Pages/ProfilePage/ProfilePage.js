@@ -1,5 +1,6 @@
 import React from "react";
 import MainLayout from "../../Layout/MainLayout/MainLayout";
+import PropTypes from 'prop-types';
 
 import "./ProfilePage.css";
 
@@ -12,5 +13,9 @@ const ProfilePage = props => {
         </MainLayout>
     );
 };
+
+ProfilePage.propTypes = {
+    onPageChange: PropTypes.func.isRequired
+}
 
 export default ProfilePage;
