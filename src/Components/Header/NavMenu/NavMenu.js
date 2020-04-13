@@ -3,8 +3,6 @@ import pagesData from "../../../AppData/pages";
 import Button from "@material-ui/core/Button";
 import { AuthContext } from '../../../Contexts/AuthContext';
 
-import "./NavMenu.css";
-
 const NavMenu = (props) => {
 
     const auth = useContext(AuthContext);

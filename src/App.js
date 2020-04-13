@@ -6,10 +6,11 @@ import MapPage from "./Pages/MapPage/MapPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import { AuthContext } from "./Contexts/AuthContext";
 
-const App = () => {
+const App = props => {
 	const auth = useContext(AuthContext);
 
-    const [currentPage, setCurrentPage] = useState(pagesData.login.id);
+    const [pages, setPagesData] = useState(props.pages);
+    const [currentPage, setCurrentPage] = useState(props.initialPage);
 
     const onPageChangeHandler = (pageId) => {
         setCurrentPage(pageId);
@@ -18,10 +19,10 @@ const App = () => {
     let Component = null;
 
     switch (currentPage) {
-        case pagesData.map.id:
+        case pages.map.id:
             Component = <MapPage onPageChange={onPageChangeHandler} />;
             break;
-        case pagesData.profile.id:
+        case pages.profile.id:
             Component = <ProfilePage onPageChange={onPageChangeHandler} />;
             break;
         default:
@@ -30,10 +31,10 @@ const App = () => {
 
     if (!auth.isLoggedIn) {
 		switch (currentPage) {
-			case pagesData.login.id:
+			case pages.login.id:
 				Component = <LoginPage onPageChange={onPageChangeHandler} />;
 				break;
-			case pagesData.signup.id:
+			case pages.signup.id:
 				Component = <SignupPage onPageChange={onPageChangeHandler} />;
 				break;
 			default:
@@ -42,7 +43,12 @@ const App = () => {
 		}
 	}
 
-    return <div className="App">{Component}</div>;
+    return <div data-testid="App" className="App">{Component}</div>;
 };
+
+App.defaultProps = {
+    pages: pagesData,
+    initialPage: pagesData.login.id
+}
 
 export default App;
