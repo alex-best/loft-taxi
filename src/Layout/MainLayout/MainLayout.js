@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../../Components/Header/Header';
+import PropTypes from 'prop-types';
 
 import './MainLayout.scss';
 

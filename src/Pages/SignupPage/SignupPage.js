@@ -10,14 +10,9 @@ import "./SignupPage.css";
 
 const SignupPage = (props) => {
 
-    const onClickHandler = (e) => {
-        e.preventDefault();
-        const pageId = e.target.id;
-
-        if (pageId) {
-            props.onPageChange(pageId);
-        }
-    };
+    const onSubmitHandler = () => {
+        props.history.push('/map')
+    }
 
     const { classes } = props;
 
@@ -31,24 +26,18 @@ const SignupPage = (props) => {
                             Уже зарегистрированы?&nbsp;
                             <Link
                                 href="/login"
-                                id="login"
-                                onClick={onClickHandler}
                             >
                                 Войти
                             </Link>
                         </span>
                     </Grid>
                     <Grid item xs={12}>
-                        <SignupForm onPageChange={props.onPageChange} />
+                        <SignupForm onSubmit={onSubmitHandler} />
                     </Grid>
                 </Paper>
             </Grid>
         </RegLayout>
     );
-};
-
-SignupPage.propTypes = {
-    onPageChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SignupPage);

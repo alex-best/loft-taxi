@@ -15,7 +15,7 @@ const LoginForm = (props) => {
         e.preventDefault();
         if (username && password) {
             auth.login(username, password);
-            props.onPageChange("map");
+            props.onSubmit();
         }
     };
 
@@ -60,10 +60,6 @@ const LoginForm = (props) => {
             </Button>
         </form>
     );
-};
-
-LoginForm.propTypes = {
-    onPageChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(LoginForm);

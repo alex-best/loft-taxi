@@ -1,54 +1,30 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import pagesData from "./AppData/pages";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignupPage from "./Pages/SignupPage/SignupPage";
 import MapPage from "./Pages/MapPage/MapPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
-import { AuthContext } from "./Contexts/AuthContext";
+import { Switch, Route } from 'react-router-dom';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 
-const App = props => {
-	const auth = useContext(AuthContext);
+const App = (props) => {
 
-    const [pages, setPagesData] = useState(props.pages);
-    const [currentPage, setCurrentPage] = useState(props.initialPage);
-
-    const onPageChangeHandler = (pageId) => {
-        setCurrentPage(pageId);
-    };
-
-    let Component = null;
-
-    switch (currentPage) {
-        case pages.map.id:
-            Component = <MapPage onPageChange={onPageChangeHandler} />;
-            break;
-        case pages.profile.id:
-            Component = <ProfilePage onPageChange={onPageChangeHandler} />;
-            break;
-        default:
-            break;
-    }
-
-    if (!auth.isLoggedIn) {
-		switch (currentPage) {
-			case pages.login.id:
-				Component = <LoginPage onPageChange={onPageChangeHandler} />;
-				break;
-			case pages.signup.id:
-				Component = <SignupPage onPageChange={onPageChangeHandler} />;
-				break;
-			default:
-				Component = <LoginPage onPageChange={onPageChangeHandler} />;
-				break;
-		}
-	}
-
-    return <div data-testid="App" className="App">{Component}</div>;
+    return (
+        <div data-testid="App" className="App">
+            <Switch>
+                <Route path="/" exact component={LoginPage} />
+                <Route path="/login" component={LoginPage} />
+                <Route path="/signup" component={SignupPage} />
+                <PrivateRoute path="/map" component={MapPage} />
+                <PrivateRoute path="/profile" component={ProfilePage} />
+            </Switch>
+        </div>
+    );
 };
 
 App.defaultProps = {
     pages: pagesData,
-    initialPage: pagesData.login.id
-}
+    initialPage: pagesData.login.id,
+};
 
 export default App;

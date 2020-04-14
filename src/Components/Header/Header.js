@@ -1,5 +1,6 @@
 import React from "react";
 import NavMenu from "./NavMenu/NavMenu";
+import PropTypes from 'prop-types';
 import { AppBar, Typography, Toolbar } from "@material-ui/core";
 import { Logo } from "loft-taxi-mui-theme";
 import { withStyles } from '@material-ui/core/styles';
@@ -19,7 +20,7 @@ const Header = props => {
                 <Typography className={classes.root}>
                     <Logo />
                 </Typography>
-				<NavMenu onPageChange={props.onPageChange}/>
+				<NavMenu />
             </Toolbar>
         </AppBar>
     );

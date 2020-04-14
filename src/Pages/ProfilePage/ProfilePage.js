@@ -14,8 +14,4 @@ const ProfilePage = props => {
     );
 };
 
-ProfilePage.propTypes = {
-    onPageChange: PropTypes.func.isRequired
-}
-
 export default ProfilePage;

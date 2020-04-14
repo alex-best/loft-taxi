@@ -18,7 +18,7 @@ const SignupForm = (props) => {
     const submitHandler = (e) => {
         e.preventDefault();
         auth.login(email, firstName, lastName, password);
-        props.onPageChange("map");
+        props.onSubmit()
     };
 
     const onEmailInputChangehandler = (e) => {
@@ -84,10 +84,6 @@ const SignupForm = (props) => {
             </Button>
         </form>
     );
-};
-
-SignupForm.propTypes = {
-    onPageChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SignupForm);
