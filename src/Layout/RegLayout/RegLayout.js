@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import Grid from '@material-ui/core/Grid';
-import background from "./background.jpg";
-import logo from "./logo.png";
+import logo from '../../assets/img/logo.png';
 
 import "./RegLayout.scss";
 
 class RegLayout extends Component {
     render() {
         return (
-            <div className="Login" style={{ background: `url(${background})` }}>
+            <div className="Login">
                     <Grid item xs={6}>
                         <Grid container justify="center" alignItems="center">
                             <div className="Login_logotype">

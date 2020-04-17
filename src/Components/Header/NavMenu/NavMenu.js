@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import pagesData from "../../../AppData/pages";
 import Button from "@material-ui/core/Button";
 import PropTypes from 'prop-types';
-import { AuthContext } from '../../../Contexts/AuthContext';
 import { Link } from 'react-router-dom';
+import { authLogout } from '../../../Store/auth/authActions';
+import { connect } from 'react-redux';
 
 const NavMenu = (props) => {
-
-    const auth = useContext(AuthContext);
 
     const navItems = [
         {
@@ -29,7 +28,8 @@ const NavMenu = (props) => {
 
         if (pageId) {
             if (pageId === 'login') {
-                auth.logout();
+                const { authLogout } = props;
+                authLogout();
             }
         }
     };
@@ -55,4 +55,12 @@ const NavMenu = (props) => {
     );
 };
 
-export default NavMenu;
+const mapStateToProps = state => {
+    return {
+        test: state.authReducer.auth.isLoggedIn
+    }
+}
+
+const mapDispatchToProps = { authLogout };
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);

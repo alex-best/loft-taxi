@@ -1,9 +1,10 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { withAuth } from "../../HOC/withAuth";
+import { connect } from "react-redux";
 
-const PrivateRoute = ({ component: RouteComponent, isLoggedIn, ...rest }) => (
-    <Route
+const PrivateRoute = ({ component: RouteComponent, isLoggedIn, ...rest }) => {
+    return (
+        <Route
         {...rest}
         render={(routeProps) =>
             isLoggedIn ? (
@@ -13,6 +14,13 @@ const PrivateRoute = ({ component: RouteComponent, isLoggedIn, ...rest }) => (
             )
         }
     />
-);
+    )
+}
 
-export default withAuth(PrivateRoute);
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.authReducer.auth.isLoggedIn
+    }
+}
+
+export default connect(mapStateToProps)(PrivateRoute);

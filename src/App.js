@@ -1,10 +1,9 @@
 import React from "react";
-import pagesData from "./AppData/pages";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignupPage from "./Pages/SignupPage/SignupPage";
 import MapPage from "./Pages/MapPage/MapPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 
 const App = (props) => {
@@ -17,14 +16,12 @@ const App = (props) => {
                 <Route path="/signup" component={SignupPage} />
                 <PrivateRoute path="/map" component={MapPage} />
                 <PrivateRoute path="/profile" component={ProfilePage} />
+                <Redirect to="/" />
             </Switch>
         </div>
     );
 };
 
-App.defaultProps = {
-    pages: pagesData,
-    initialPage: pagesData.login.id,
-};
+
 
 export default App;

@@ -2,23 +2,22 @@ import React, { useState, useContext } from "react";
 import { Grid, TextField, Button } from "@material-ui/core";
 import styles from "../../AppData/regFormStyles";
 import { withStyles } from "@material-ui/core/styles";
-import { AuthContext } from "../../Contexts/AuthContext";
 import PropTypes from "prop-types";
 
 import "./SignupForm.css";
 
 const SignupForm = (props) => {
-    const auth = useContext(AuthContext);
 
     const [email, setEmail] = useState(null);
-    const [firstName, setFirstName] = useState(null);
-    const [lastName, setLastName] = useState(null);
+    const [name, setName] = useState(null);
+    const [surname, setSurname] = useState(null);
     const [password, setPassword] = useState(null);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        auth.login(email, firstName, lastName, password);
-        props.onSubmit()
+        if (email && password && name && surname) {
+            props.onSubmit(email, password, name, surname)
+        }
     };
 
     const onEmailInputChangehandler = (e) => {
@@ -26,11 +25,11 @@ const SignupForm = (props) => {
     };
 
     const onFirstNameInputChangehandler = (e) => {
-        setFirstName(e.target.value);
+        setName(e.target.value);
     };
 
     const onLastNameInputChangehandler = (e) => {
-        setLastName(e.target.value);
+        setSurname(e.target.value);
     };
 
     const onPasswordInputChangehandler = (e) => {
@@ -46,6 +45,7 @@ const SignupForm = (props) => {
                 margin={"normal"}
                 label="Адрес электронной почты"
                 placeholder="Адрес электронной почты"
+                type="email"
                 onChange={onEmailInputChangehandler}
             />
             <Grid container spacing={2}>
@@ -71,6 +71,7 @@ const SignupForm = (props) => {
                 margin={"normal"}
                 label="Пароль"
                 placeholder="Пароль"
+                type="password"
                 onChange={onPasswordInputChangehandler}
             />
             <Button
@@ -85,5 +86,9 @@ const SignupForm = (props) => {
         </form>
     );
 };
+
+SignupForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired
+}
 
 export default withStyles(styles)(SignupForm);
