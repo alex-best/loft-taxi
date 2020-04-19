@@ -16,8 +16,6 @@ const styles = {
     },
 };
 
-// ! При загрузке страницы должен делать запрос, а не загружать данные карты из localStorage!!!
-
 const ProfilePage = (props) => {
     useEffect(() => {
         const { getCardRequest, error } = props;
