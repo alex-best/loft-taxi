@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import ruLocale from "date-fns/locale/ru";
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import PropTypes from 'prop-types';
 
-const DatePickerInput = () => {
+const DatePickerInput = (props) => {
     const[date, setDate] = useState(new Date())
 
     const onChangeHandler = (date) => {
         setDate(date);
+        props.onChange(date);
     }
 
     return (
@@ -22,6 +24,10 @@ const DatePickerInput = () => {
             />
         </MuiPickersUtilsProvider>
     )
+}
+
+DatePickerInput.propTypes = {
+    onChange: PropTypes.func.isRequired
 }
 
 export default DatePickerInput;

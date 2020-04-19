@@ -3,11 +3,10 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignupPage from "./Pages/SignupPage/SignupPage";
 import MapPage from "./Pages/MapPage/MapPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
-import { Switch, Route, Redirect } from 'react-router-dom';
-import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import { Switch, Route, Redirect } from "react-router-dom";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 const App = (props) => {
-
     return (
         <div data-testid="App" className="App">
             <Switch>
@@ -21,7 +20,5 @@ const App = (props) => {
         </div>
     );
 };
-
-
 
 export default App;

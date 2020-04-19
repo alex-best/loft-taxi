@@ -1,7 +1,6 @@
 import React from "react";
 import pagesData from "../../../AppData/pages";
 import Button from "@material-ui/core/Button";
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { authLogout } from '../../../Store/auth/authActions';
 import { connect } from 'react-redux';

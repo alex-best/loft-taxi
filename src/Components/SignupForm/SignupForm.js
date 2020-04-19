@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Grid, TextField, Button } from "@material-ui/core";
 import styles from "../../AppData/regFormStyles";
 import { withStyles } from "@material-ui/core/styles";

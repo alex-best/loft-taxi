@@ -14,7 +14,7 @@ export const authMiddleware = (store) => (next) => (action) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify(action.payload)
         })
             .then(async (response) => {
                 const result = await response.json();

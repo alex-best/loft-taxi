@@ -8,22 +8,21 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { rootReducer } from "./Store/rootReducer";
 import { authMiddleware } from "./Store/auth/authMiddleware";
+import { profileMiddleware } from "./Pages/ProfilePage/middleware";
 import "./index.css";
 
 const store = createStore(
     rootReducer,
-    applyMiddleware(authMiddleware)
+    applyMiddleware(profileMiddleware, authMiddleware)
 );
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
-        {/* <React.StrictMode> */}
-            <Provider store={store}>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
-            </Provider>
-        {/* </React.StrictMode> */}
+        <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>
     </MuiThemeProvider>,
     document.getElementById("root")
 );
