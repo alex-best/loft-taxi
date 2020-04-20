@@ -28,7 +28,7 @@ const ProfilePage = (props) => {
         cvc,
         getCardRequest,
         token,
-        success,
+        isFetched,
         error,
     } = props;
 
@@ -63,7 +63,7 @@ const ProfilePage = (props) => {
                                 <span>Способ оплаты</span>
                             </div>
                             {error && <span style={styles.error}>{error}</span>}
-                            {success && (
+                            {isFetched && (
                                 <ProfileForm
                                     onSubmit={onSubmitHandler}
                                     cardNumber={cardNumber}

@@ -60,6 +60,15 @@ const error = handleActions(
     false
 );
 
+const isFetched = handleActions(
+    {
+        [setCardRequest]: () => false,
+        [getCardSuccessRequest]: () => true,
+        [failureRequest]: () => true,
+    },
+    false
+);
+
 export default combineReducers({
     cardNumber,
     expiryDate,
@@ -67,4 +76,5 @@ export default combineReducers({
     cvc,
     success,
     error,
+    isFetched,
 });
