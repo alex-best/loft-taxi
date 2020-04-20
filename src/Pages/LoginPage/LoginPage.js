@@ -1,43 +1,33 @@
 import React from "react";
-import { Grid, Paper, Link } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
+import { Link } from 'react-router-dom';
 import RegLayout from "../../Layout/RegLayout/RegLayout";
 import LoginForm from "../../Components/LoginForm/LoginForm";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import styles from "../../AppData/regFormStyles";
+import { connect } from "react-redux";
+import { authRequest } from "./actions";
 
 import "./LoginPage.css";
 
 const LoginPage = (props) => {
+    const { error, authRequest } = props;
 
-	const onClickHandler = (e) => {
-        e.preventDefault();
-        const pageId = e.target.id;
-
-        if (pageId) {
-            props.onPageChange(pageId);
-        }
-	};
-	
-	const { classes } = props;
+    const onSubmitHandler = (email, password) => {
+        authRequest({email, password});
+    };
 
     return (
         <RegLayout>
             <Grid container>
                 <Grid item xs={12}>
-                    <Paper className={classes.root}>
+                    <Paper style={styles.root}>
                         <h2>Войти</h2>
                         <span>
                             Новый пользователь?&nbsp;
-                            <Link
-                                href="/signup"
-                                id="signup"
-                                onClick={onClickHandler}
-                            >
-                                Зарегистрируйтесь
-                            </Link>
+                            <Link style={styles.link} to="/signup">Зарегистрируйтесь</Link>
                         </span>
-                        <LoginForm onPageChange={props.onPageChange} />
+                        { error && <p style={{color: 'red'}}>{error}</p>}
+                        <LoginForm onSubmit={onSubmitHandler} />
                     </Paper>
                 </Grid>
             </Grid>
@@ -45,8 +35,13 @@ const LoginPage = (props) => {
     );
 };
 
-LoginPage.propTypes = {
-    onPageChange: PropTypes.func.isRequired,
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.authReducer.isLoggedIn,
+        error: state.authReducer.error
+    };
 };
 
-export default withStyles(styles)(LoginPage);
+const mapDispatchToProps = { authRequest };
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

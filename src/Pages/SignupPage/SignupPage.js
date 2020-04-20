@@ -1,45 +1,35 @@
 import React from "react";
-import { Grid, Paper, Link } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
+import { Link } from 'react-router-dom';
 import RegLayout from "../../Layout/RegLayout/RegLayout";
 import SignupForm from "../../Components/SignupForm/SignupForm";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import { regRequest } from "./actions";
 import styles from "../../AppData/regFormStyles";
 
 import "./SignupPage.css";
 
 const SignupPage = (props) => {
+    const { error, regRequest } = props;
 
-    const onClickHandler = (e) => {
-        e.preventDefault();
-        const pageId = e.target.id;
-
-        if (pageId) {
-            props.onPageChange(pageId);
-        }
+    const onSubmitHandler = (email, password, name, surname) => {
+        regRequest({ email, password, name, surname });
     };
-
-    const { classes } = props;
 
     return (
         <RegLayout>
             <Grid container>
-                <Paper className={classes.root}>
+                <Paper style={styles.root}>
                     <Grid item xs={12}>
                         <h2>Зарегистрироваться</h2>
                         <span>
                             Уже зарегистрированы?&nbsp;
-                            <Link
-                                href="/login"
-                                id="login"
-                                onClick={onClickHandler}
-                            >
-                                Войти
-                            </Link>
+                            <Link style={styles.link} to="/login">Войти</Link>
                         </span>
                     </Grid>
                     <Grid item xs={12}>
-                        <SignupForm onPageChange={props.onPageChange} />
+                        { error && <p style={{color: 'red'}}>{error}</p>}
+                        <SignupForm onSubmit={onSubmitHandler} />
                     </Grid>
                 </Paper>
             </Grid>
@@ -47,8 +37,13 @@ const SignupPage = (props) => {
     );
 };
 
-SignupPage.propTypes = {
-    onPageChange: PropTypes.func.isRequired,
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.authReducer.isLoggedIn,
+        error: state.authReducer.error
+    };
 };
 
-export default withStyles(styles)(SignupPage);
+const mapDispatchToProps = { regRequest };
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

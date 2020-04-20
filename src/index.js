@@ -1,22 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
 import { theme } from "loft-taxi-mui-theme";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import { AuthProvider } from './Contexts/AuthContext';
-import App from './App';
-import './index.css';
+import { BrowserRouter } from "react-router-dom";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import { rootReducer } from "./Store/rootReducer";
+import { authMiddleware } from "./Middleware/authMiddleware";
+import { regMiddleware } from './Middleware/regMiddleware';
+import { profileMiddleware } from "./Middleware/profileMiddleware";
+import "./index.css";
 
-ReactDOM.render(
-  <MuiThemeProvider theme={theme} >
-      <React.StrictMode>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </React.StrictMode>
-  </MuiThemeProvider>,
-  document.getElementById('root')
+const store = createStore(
+    rootReducer,
+    applyMiddleware(profileMiddleware, authMiddleware, regMiddleware)
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+ReactDOM.render(
+    <MuiThemeProvider theme={theme}>
+        <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>
+    </MuiThemeProvider>,
+    document.getElementById("root")
+);

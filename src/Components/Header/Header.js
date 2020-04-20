@@ -14,12 +14,12 @@ const Header = props => {
     const { classes } = props;
 
     return (
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="default" style={{zIndex: '10'}}>
             <Toolbar>
                 <Typography className={classes.root}>
                     <Logo />
                 </Typography>
-				<NavMenu onPageChange={props.onPageChange}/>
+				<NavMenu />
             </Toolbar>
         </AppBar>
     );

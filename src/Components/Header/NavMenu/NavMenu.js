@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import pagesData from "../../../AppData/pages";
 import Button from "@material-ui/core/Button";
-import { AuthContext } from '../../../Contexts/AuthContext';
+import { Link } from 'react-router-dom';
+import { authLogout } from '../../../Pages/LoginPage/actions';
+import { connect } from 'react-redux';
 
 const NavMenu = (props) => {
-
-    const auth = useContext(AuthContext);
 
     const navItems = [
         {
@@ -23,14 +23,13 @@ const NavMenu = (props) => {
     ];
 
     const onLinkClickedHandler = (e) => {
-        e.preventDefault();
         const pageId = e.target.closest(".nav-link").id;
 
         if (pageId) {
             if (pageId === 'login') {
-                auth.logout();
+                const { authLogout } = props;
+                authLogout();
             }
-            props.onPageChange(pageId);
         }
     };
 
@@ -41,9 +40,10 @@ const NavMenu = (props) => {
                     <Button
                         className="nav-link"
                         style={{ fontWeight: 400 }}
-                        href={page.href}
                         id={page.id}
                         key={page.id}
+                        component={Link}
+                        to={page.href}
                         onClick={onLinkClickedHandler}
                     >
                         {page.title}
@@ -54,4 +54,12 @@ const NavMenu = (props) => {
     );
 };
 
-export default NavMenu;
+const mapStateToProps = state => {
+    return {
+        test: state.authReducer.isLoggedIn
+    }
+}
+
+const mapDispatchToProps = { authLogout };
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);

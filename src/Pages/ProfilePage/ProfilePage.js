@@ -1,21 +1,92 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MainLayout from "../../Layout/MainLayout/MainLayout";
-import PropTypes from 'prop-types';
+import ProfileForm from "../../Components/ProfileForm/ProfileForm";
+import { Grid, Paper } from "@material-ui/core";
+import { setCardRequest, getCardRequest } from "./actions";
+import { connect } from "react-redux";
 
-import "./ProfilePage.css";
+import "./ProfilePage.scss";
 
-const ProfilePage = props => {
+const styles = {
+    panel: {
+        marginTop: "50px",
+        width: "100%",
+        textAlign: "center",
+    },
+    error: {
+        display: "block",
+        color: "crimson",
+        marginBottom: "40px",
+    },
+};
+
+const ProfilePage = (props) => {
+    const {
+        cardNumber,
+        expiryDate,
+        cardName,
+        cvc,
+        getCardRequest,
+        token,
+        isFetched,
+        error,
+    } = props;
+
+    useEffect(() => {
+        getCardRequest(token);
+    }, [token, getCardRequest]);
+
+    const onSubmitHandler = (cardNumber, cardName, expiryDate, cvc) => {
+        if (cardNumber && cardName && expiryDate && cvc) {
+            const { setCardRequest } = props;
+            setCardRequest({
+                cardNumber,
+                cardName,
+                expiryDate,
+                cvc,
+                token: props.token,
+            });
+        }
+    };
+
     return (
         <MainLayout onPageChange={props.onPageChange}>
-            <div className="Profile">
-                <h1>Profile</h1>
+            <div className="Profile" style={styles.root}>
+                <Grid item xs={6}>
+                    <Grid container>
+                        <Paper
+                            style={styles.panel}
+                            className="Profile_card card"
+                        >
+                            <div className="card_header">
+                                <h4>Профиль</h4>
+                                <span>Способ оплаты</span>
+                            </div>
+                            {error && <span style={styles.error}>{error}</span>}
+                            {isFetched && (
+                                <ProfileForm
+                                    onSubmit={onSubmitHandler}
+                                    cardNumber={cardNumber}
+                                    expiryDate={expiryDate}
+                                    cardName={cardName}
+                                    cvc={cvc}
+                                />
+                            )}
+                        </Paper>
+                    </Grid>
+                </Grid>
             </div>
         </MainLayout>
     );
 };
 
-ProfilePage.propTypes = {
-    onPageChange: PropTypes.func.isRequired
-}
+const mapStateToProps = (state) => {
+    return {
+        token: state.authReducer.token,
+        ...state.profileReducer,
+    };
+};
 
-export default ProfilePage;
+const mapDispatchToProps = { setCardRequest, getCardRequest };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
