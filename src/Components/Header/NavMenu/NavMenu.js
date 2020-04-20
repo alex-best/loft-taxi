@@ -2,7 +2,7 @@ import React from "react";
 import pagesData from "../../../AppData/pages";
 import Button from "@material-ui/core/Button";
 import { Link } from 'react-router-dom';
-import { authLogout } from '../../../Store/auth/authActions';
+import { authLogout } from '../../../Pages/LoginPage/actions';
 import { connect } from 'react-redux';
 
 const NavMenu = (props) => {
@@ -56,7 +56,7 @@ const NavMenu = (props) => {
 
 const mapStateToProps = state => {
     return {
-        test: state.authReducer.auth.isLoggedIn
+        test: state.authReducer.isLoggedIn
     }
 }
 

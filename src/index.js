@@ -7,13 +7,14 @@ import { BrowserRouter } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { rootReducer } from "./Store/rootReducer";
-import { authMiddleware } from "./Store/auth/authMiddleware";
-import { profileMiddleware } from "./Pages/ProfilePage/middleware";
+import { authMiddleware } from "./Middleware/authMiddleware";
+import { regMiddleware } from './Middleware/regMiddleware';
+import { profileMiddleware } from "./Middleware/profileMiddleware";
 import "./index.css";
 
 const store = createStore(
     rootReducer,
-    applyMiddleware(profileMiddleware, authMiddleware)
+    applyMiddleware(profileMiddleware, authMiddleware, regMiddleware)
 );
 
 ReactDOM.render(

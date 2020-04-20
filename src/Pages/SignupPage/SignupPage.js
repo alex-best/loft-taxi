@@ -3,24 +3,20 @@ import { Grid, Paper } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 import RegLayout from "../../Layout/RegLayout/RegLayout";
 import SignupForm from "../../Components/SignupForm/SignupForm";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { authRequest } from "../../Store/auth/authActions";
+import { regRequest } from "./actions";
 import styles from "../../AppData/regFormStyles";
 
 import "./SignupPage.css";
 
 const SignupPage = (props) => {
-    const { isLoggedIn, error } = props;
+    const { error, regRequest } = props;
 
     const onSubmitHandler = (email, password, name, surname) => {
-        const { authRequest } = props;
-        authRequest({ email, password, name, surname }, "/register");
+        regRequest({ email, password, name, surname });
     };
 
-    return isLoggedIn ? (
-        <Redirect to="/map" />
-    ) : (
+    return (
         <RegLayout>
             <Grid container>
                 <Paper style={styles.root}>
@@ -32,7 +28,7 @@ const SignupPage = (props) => {
                         </span>
                     </Grid>
                     <Grid item xs={12}>
-                        { error ? <p style={{color: 'red'}}>{error}</p> : null}
+                        { error && <p style={{color: 'red'}}>{error}</p>}
                         <SignupForm onSubmit={onSubmitHandler} />
                     </Grid>
                 </Paper>
@@ -43,11 +39,11 @@ const SignupPage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.authReducer.auth.isLoggedIn,
-        error: state.authReducer.auth.error,
+        isLoggedIn: state.authReducer.isLoggedIn,
+        error: state.authReducer.error
     };
 };
 
-const mapDispatchToProps = { authRequest };
+const mapDispatchToProps = { regRequest };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

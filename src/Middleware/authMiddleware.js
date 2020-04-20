@@ -3,26 +3,25 @@ import {
     authSuccess,
     authFailure,
     authLogout,
-} from "./authActions";
+} from "../Pages/LoginPage/actions";
 
-const serverUrl = "https://loft-taxi.glitch.me";
+const authUrl = "https://loft-taxi.glitch.me/auth";
 
 export const authMiddleware = (store) => (next) => (action) => {
     if (action.type === authRequest.toString()) {
-        fetch(serverUrl + action.meta, {
+        fetch(authUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(action.payload)
+            body: JSON.stringify(action.payload),
         })
-            .then(async (response) => {
-                const result = await response.json();
-
-                if (result.error) {
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
                     store.dispatch({
                         type: authFailure.toString(),
-                        payload: result.error,
+                        payload: data.error,
                     });
 
                     return;
@@ -30,7 +29,7 @@ export const authMiddleware = (store) => (next) => (action) => {
 
                 store.dispatch({
                     type: authSuccess.toString(),
-                    payload: result,
+                    payload: data,
                 });
 
                 const stateJSON = JSON.stringify(store.getState().authReducer);

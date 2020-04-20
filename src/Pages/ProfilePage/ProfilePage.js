@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import MainLayout from "../../Layout/MainLayout/MainLayout";
-import DatePickerInput from "../../Components/DatePickerInput/DatePickerInput";
-import { Grid, Paper, TextField, Button } from "@material-ui/core";
-import { MCIcon } from "loft-taxi-mui-theme";
+import ProfileForm from "../../Components/ProfileForm/ProfileForm";
+import { Grid, Paper } from "@material-ui/core";
 import { setCardRequest, getCardRequest } from "./actions";
 import { connect } from "react-redux";
 
@@ -14,85 +13,40 @@ const styles = {
         width: "100%",
         textAlign: "center",
     },
+    error: {
+        display: "block",
+        color: "crimson",
+        marginBottom: "40px",
+    },
 };
 
-// ! При загрузке страницы должен делать запрос, а не загружать данные карты из localStorage!!!
-
 const ProfilePage = (props) => {
+    const {
+        cardNumber,
+        expiryDate,
+        cardName,
+        cvc,
+        getCardRequest,
+        token,
+        success,
+        error,
+    } = props;
+
     useEffect(() => {
-        const { getCardRequest, error } = props;
+        getCardRequest(token);
+    }, [token, getCardRequest]);
 
-        if (error) return;
-
-        getCardRequest(props.token);
-
-        const { cardNumber, cardName, cvc, expiryDate } = props;
-
-        setCardNumber(cardNumber);
-        setCardName(cardName);
-        setCvc(cvc);
-        setExpiryDate(expiryDate);
-    }, [props]);
-
-    const [cardNumber, setCardNumber] = useState(props.cardNumber);
-    const [cardName, setCardName] = useState(props.cardName);
-    const [cvc, setCvc] = useState(props.cvc);
-    const [expiryDate, setExpiryDate] = useState(props.expiryDate);
-
-    console.log(props.error);
-
-    const onCardNumberChangeHandler = (e) => {
-        const value = e.target.value.trim();
-
-        if (value.length === 20) return;
-
-        const onlyNum = value.replace(/[^\d\s]/g, "");
-        const reg = /\d{1,4}/g;
-
-        setCardNumber(onlyNum && onlyNum.substring(0, 20).match(reg).join(" "));
-    };
-
-    const onCardNameChangeHandler = (e) => {
-        const value = e.target.value;
-
-        const cardName = value.replace(/[0-9]/g, "");
-
-        setCardName(cardName);
-    };
-
-    const onCvcChangeHandler = (e) => {
-        const value = e.target.value;
-
-        const cvc = value.replace(/\D/g, "");
-
-        if (cvc.length === 4) return;
-
-        setCvc(cvc);
-    };
-
-    const onDatePickerChangeHandler = (date) => {
-        const newDate = getFormattedDate(date);
-        setExpiryDate(newDate);
-    };
-
-    const onSubmitHandler = (e) => {
-        e.preventDefault();
-
+    const onSubmitHandler = (cardNumber, cardName, expiryDate, cvc) => {
         if (cardNumber && cardName && expiryDate && cvc) {
             const { setCardRequest } = props;
-            setCardRequest({ cardNumber, cardName, expiryDate, cvc, token: props.token });
+            setCardRequest({
+                cardNumber,
+                cardName,
+                expiryDate,
+                cvc,
+                token: props.token,
+            });
         }
-    };
-
-    const getFormattedDate = (date) => {
-        const year = date.getFullYear().toString().slice(2);
-        let month = (date.getMonth() + 1).toString();
-
-        if (month.length < 2) {
-            month = `0${month}`;
-        }
-
-        return `${month}/${year}`;
     };
 
     return (
@@ -108,82 +62,16 @@ const ProfilePage = (props) => {
                                 <h4>Профиль</h4>
                                 <span>Способ оплаты</span>
                             </div>
-                            <form
-                                className="card_form"
-                                onSubmit={onSubmitHandler}
-                            >
-                                <Grid container alignContent="center">
-                                    <Grid item xs={12}>
-                                        <Grid
-                                            container
-                                            spacing={1}
-                                            justify="space-evenly"
-                                        >
-                                            <Paper
-                                                className="card_form_col"
-                                                elevation={3}
-                                            >
-                                                <MCIcon />
-                                                <TextField
-                                                    label="Номер карты"
-                                                    style={{
-                                                        marginBottom: "20px",
-                                                    }}
-                                                    placeholder="0000 0000 0000 0000"
-                                                    value={cardNumber}
-                                                    required
-                                                    onChange={
-                                                        onCardNumberChangeHandler
-                                                    }
-                                                />
-                                                <DatePickerInput
-                                                    onChange={
-                                                        onDatePickerChangeHandler
-                                                    }
-                                                />
-                                            </Paper>
-                                            <Paper
-                                                className="card_form_col"
-                                                elevation={3}
-                                            >
-                                                <TextField
-                                                    label="Имя владельца"
-                                                    style={{
-                                                        marginBottom: "20px",
-                                                    }}
-                                                    placeholder="CARD HOLDER"
-                                                    value={cardName}
-                                                    required
-                                                    onChange={
-                                                        onCardNameChangeHandler
-                                                    }
-                                                />
-                                                <TextField
-                                                    label="CVC"
-                                                    placeholder="CVC"
-                                                    value={cvc}
-                                                    required
-                                                    onChange={
-                                                        onCvcChangeHandler
-                                                    }
-                                                />
-                                            </Paper>
-                                            <Grid item xs={12}>
-                                                <Button
-                                                    style={{
-                                                        marginTop: "40px",
-                                                    }}
-                                                    color="primary"
-                                                    variant="contained"
-                                                    type="submit"
-                                                >
-                                                    Сохранить
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </form>
+                            {error && <span style={styles.error}>{error}</span>}
+                            {success && (
+                                <ProfileForm
+                                    onSubmit={onSubmitHandler}
+                                    cardNumber={cardNumber}
+                                    expiryDate={expiryDate}
+                                    cardName={cardName}
+                                    cvc={cvc}
+                                />
+                            )}
                         </Paper>
                     </Grid>
                 </Grid>
@@ -194,8 +82,8 @@ const ProfilePage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-		token: state.authReducer.auth.token,
-		...state.profileReducer.card
+        token: state.authReducer.token,
+        ...state.profileReducer,
     };
 };
 

@@ -1,5 +1,5 @@
-import { authReducer } from './authReducer';
-import { authLogout, authSuccess, authFailure } from './authActions';
+import { authReducer } from './reducer';
+import { authLogout, authSuccess, authFailure } from './actions';
 
 const initialState = {
     auth: {

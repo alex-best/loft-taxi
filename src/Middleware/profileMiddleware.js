@@ -1,4 +1,4 @@
-import { setCardRequest, setCardSuccessRequest, failureRequest, getCardRequest, getCardSuccessRequest } from "./actions";
+import { setCardRequest, setCardSuccessRequest, failureRequest, getCardRequest, getCardSuccessRequest } from "../Pages/ProfilePage/actions";
 
 export const profileMiddleware = (store) => (next) => (action) => {
     if (action.type === setCardRequest.toString()) {
@@ -9,11 +9,10 @@ export const profileMiddleware = (store) => (next) => (action) => {
             },
             body: JSON.stringify(action.payload),
         })
-            .then(async (response) => {
-                const result = await response.json();
-
-                if (result.error) {
-                    dispatchErrorAction(result.error);
+            .then((response) => response.json())
+            .then(data => {
+                if (data.error) {
+                    dispatchErrorAction(data.error);
 
                     return;
                 }
@@ -40,11 +39,10 @@ export const profileMiddleware = (store) => (next) => (action) => {
         fetch(`https://loft-taxi.glitch.me/card?token=${action.payload}`, {
             method: "GET"
         })
-            .then(async response => {
-                const result = await response.json();
-                
-                if (result.error) {
-                    dispatchErrorAction(result.error);
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    dispatchErrorAction(data.error);
 
                     return;
                 }
@@ -52,15 +50,14 @@ export const profileMiddleware = (store) => (next) => (action) => {
                 store.dispatch({
                     type: getCardSuccessRequest.toString(),
                     payload: {
-                        ...result
+                        ...data
                     }
                 })
-
             })
             .catch(() => {
                 store.dispatch({
                     type: failureRequest.toString(),
-                    payload: "Нет связи с сервером",
+                    payload: "Нет связи с сервером"
                 });
             })
     }
