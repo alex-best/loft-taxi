@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignupPage from "./Pages/SignupPage/SignupPage";
 import MapPage from "./Pages/MapPage/MapPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { getCardRequest } from "./Store/Profile/actions";
+import { getAddressListRequest } from "./Store/AddressList/actions";
 
 const App = (props) => {
-    const { isLoggedIn } = props;
+    const {
+        isLoggedIn,
+        getCardRequest,
+        token,
+        getAddressListRequest,
+    } = props;
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            getCardRequest(token);
+            getAddressListRequest();
+        }
+    });
 
     return (
         <div data-testid="App" className="App">
@@ -30,8 +44,11 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.authReducer.isLoggedIn
+        isLoggedIn: state.auth.isLoggedIn,
+        token: state.auth.token,
     };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = { getCardRequest, getAddressListRequest };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

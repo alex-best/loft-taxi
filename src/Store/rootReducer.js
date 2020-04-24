@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
-import authReducer from '../Pages/LoginPage/reducer';
-import regReducer from '../Pages/SignupPage/reducer';
-import profileReducer from '../Pages/ProfilePage/reducer';
+import auth from './Login/reducer';
+import reg from './Signup/reducer';
+import profile from './Profile/reducer';
+import addressList from './AddressList/reducer';
+import route from './Route/reducer';
 
 export const rootReducer = combineReducers({
-    authReducer,
-    regReducer,
-    profileReducer
+    auth,
+    reg,
+    profile,
+    addressList,
+    route
 });

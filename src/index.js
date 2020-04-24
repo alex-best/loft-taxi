@@ -7,15 +7,18 @@ import { BrowserRouter } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { rootReducer } from "./Store/rootReducer";
-import { authMiddleware } from "./Middleware/authMiddleware";
-import { regMiddleware } from './Middleware/regMiddleware';
-import { profileMiddleware } from "./Middleware/profileMiddleware";
+import createSagaMiddleware from 'redux-saga';
+import { rootSaga } from './Sagas/rootSaga';
 import "./index.css";
+
+const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
     rootReducer,
-    applyMiddleware(profileMiddleware, authMiddleware, regMiddleware)
+    applyMiddleware(sagaMiddleware)
 );
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>

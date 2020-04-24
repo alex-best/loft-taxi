@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MainLayout from "../../Layout/MainLayout/MainLayout";
 import ProfileForm from "../../Components/ProfileForm/ProfileForm";
 import { Grid, Paper } from "@material-ui/core";
-import { setCardRequest, getCardRequest } from "./actions";
+import { setCardRequest, getCardRequest } from "../../Store/Profile/actions";
 import { connect } from "react-redux";
 
 import "./ProfilePage.scss";
@@ -26,15 +26,9 @@ const ProfilePage = (props) => {
         expiryDate,
         cardName,
         cvc,
-        getCardRequest,
-        token,
         isFetched,
         error,
     } = props;
-
-    useEffect(() => {
-        getCardRequest(token);
-    }, [token, getCardRequest]);
 
     const onSubmitHandler = (cardNumber, cardName, expiryDate, cvc) => {
         if (cardNumber && cardName && expiryDate && cvc) {
@@ -82,8 +76,8 @@ const ProfilePage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        token: state.authReducer.token,
-        ...state.profileReducer,
+        token: state.auth.token,
+        ...state.profile,
     };
 };
 

@@ -3,18 +3,19 @@ import { handleActions } from "redux-actions";
 import { combineReducers } from "redux";
 
 const getInitialState = () => {
-    const initialState = {
-        isLoggedIn: false,
-        success: false,
-        error: null,
-        token: null
-    };
+    let isLoggedIn = false;
+    let token = null;
 
-    const stateFromLocalStorage = JSON.parse(localStorage.getItem('auth'));
+    const stateFromLocalStorage = JSON.parse(localStorage.getItem('userData'));
+
+    if (stateFromLocalStorage) {
+        isLoggedIn = stateFromLocalStorage.isLoggedIn;
+        token = stateFromLocalStorage.token;
+    }
 
     return {
-        isLoggedIn: stateFromLocalStorage.isLoggedIn || initialState.isLoggedIn,
-        token: stateFromLocalStorage.token || initialState.token
+        isLoggedIn,
+        token
     }
 }
 

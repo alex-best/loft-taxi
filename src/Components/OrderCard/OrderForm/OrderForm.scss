@@ -1,0 +1,14 @@
+.OrderForm {
+    position: absolute;
+    top: 125px;
+    left: 50px;
+    width: 420px;
+    padding: 45px 55px;
+    &_input {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    &_btn {
+        width: 100%;
+    }
+}
