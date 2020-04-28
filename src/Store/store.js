@@ -18,7 +18,6 @@ export default () => {
         const token = userData.token;
 
         if (token) {
-            console.log("test");
             store.dispatch({
                 type: getCardRequest.toString(),
                 payload: {
