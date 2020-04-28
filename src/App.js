@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignupPage from "./Pages/SignupPage/SignupPage";
 import MapPage from "./Pages/MapPage/MapPage";
@@ -9,19 +9,7 @@ import { getCardRequest } from "./Store/Profile/actions";
 import { getAddressListRequest } from "./Store/AddressList/actions";
 
 const App = (props) => {
-    const {
-        isLoggedIn,
-        getCardRequest,
-        token,
-        getAddressListRequest,
-    } = props;
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            getCardRequest(token);
-            getAddressListRequest();
-        }
-    });
+    const { isLoggedIn } = props;
 
     return (
         <div data-testid="App" className="App">
@@ -45,7 +33,6 @@ const App = (props) => {
 const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.auth.isLoggedIn,
-        token: state.auth.token,
     };
 };
 

@@ -48,6 +48,7 @@ const cvc = handleActions(
 const success = handleActions(
     {
         [setCardRequest]: () => false,
+        [setCardSuccessRequest]: () => true,
         [getCardSuccessRequest]: () => true,
         [failureRequest]: () => false,
     },

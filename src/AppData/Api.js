@@ -17,9 +17,9 @@ export default {
             body: JSON.stringify(action.payload),
         }).then((response) => response.json());
     },
-    fetchGetCardRequest: (action) => {
+    fetchGetCardRequest: (token) => {
         return fetch(
-            `https://loft-taxi.glitch.me/card?token=${action.payload}`
+            `https://loft-taxi.glitch.me/card?token=${token}`
         ).then((response) => response.json());
     },
     fetchSetCardRequest: (action) => {
