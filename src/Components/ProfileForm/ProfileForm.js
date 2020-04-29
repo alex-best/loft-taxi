@@ -8,7 +8,7 @@ const ProfileForm = (props) => {
     const [cardNumber, setCardNumber] = useState(props.cardNumber);
     const [cardName, setCardName] = useState(props.cardName);
     const [cvc, setCvc] = useState(props.cvc);
-    const [, setExpiryDate] = useState(props.expiryDate);
+    const [expiryDate, setExpiryDate] = useState(props.expiryDate);
 
     const onCardNumberChangeHandler = (e) => {
         const value = e.target.value.trim();
@@ -57,7 +57,7 @@ const ProfileForm = (props) => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        props.onSubmit();
+        props.onSubmit(cardNumber, cardName, expiryDate, cvc);
     };
 
     return (

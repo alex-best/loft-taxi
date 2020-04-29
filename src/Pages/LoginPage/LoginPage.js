@@ -5,8 +5,7 @@ import RegLayout from "../../Layout/RegLayout/RegLayout";
 import LoginForm from "../../Components/LoginForm/LoginForm";
 import styles from "../../AppData/regFormStyles";
 import { connect } from "react-redux";
-import { authRequest } from "./actions";
-
+import { authRequest } from "../../Store/Login/actions";
 import "./LoginPage.css";
 
 const LoginPage = (props) => {
@@ -37,8 +36,8 @@ const LoginPage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.authReducer.isLoggedIn,
-        error: state.authReducer.error
+        isLoggedIn: state.auth.isLoggedIn,
+        error: state.auth.error
     };
 };
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import RegLayout from "../../Layout/RegLayout/RegLayout";
 import SignupForm from "../../Components/SignupForm/SignupForm";
 import { connect } from "react-redux";
-import { regRequest } from "./actions";
+import { regRequest } from "../../Store/Signup/actions";
 import styles from "../../AppData/regFormStyles";
 
 import "./SignupPage.css";
@@ -38,9 +38,10 @@ const SignupPage = (props) => {
 };
 
 const mapStateToProps = (state) => {
+    console.log(state)
     return {
-        isLoggedIn: state.authReducer.isLoggedIn,
-        error: state.authReducer.error
+        isLoggedIn: state.reg.isLoggedIn,
+        error: state.reg.error
     };
 };
 

@@ -5,6 +5,8 @@ import MapPage from "./Pages/MapPage/MapPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { getCardRequest } from "./Store/Profile/actions";
+import { getAddressListRequest } from "./Store/AddressList/actions";
 
 const App = (props) => {
     const { isLoggedIn } = props;
@@ -30,8 +32,10 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.authReducer.isLoggedIn
+        isLoggedIn: state.auth.isLoggedIn,
     };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = { getCardRequest, getAddressListRequest };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
