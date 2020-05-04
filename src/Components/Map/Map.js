@@ -2,7 +2,7 @@ import React from "react";
 import mapboxgl from "mapbox-gl";
 import { ACCESS_TOKEN } from "../../AppData/mapAccessToken";
 import { connect } from "react-redux";
-import OrderCard from "../../Components/OrderCard/OrderCard";
+import {OrderCard} from "../../Components/OrderCard/";
 import { clearRoute } from '../../Store/Route/actions';
 
 const styles = {

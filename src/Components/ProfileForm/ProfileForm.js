@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import DatePickerInput from "../../Components/DatePickerInput/DatePickerInput";
 import { Grid, Paper, TextField, Button } from "@material-ui/core";
 import { MCIcon } from "loft-taxi-mui-theme";
-import "./ProfileForm.scss";
+
+const styles = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    position: 'relative',
+    width: '300px',
+    padding: '30px'
+}
 
 const ProfileForm = (props) => {
     const [cardNumber, setCardNumber] = useState(props.cardNumber);
@@ -65,7 +73,7 @@ const ProfileForm = (props) => {
             <Grid container alignContent="center">
                 <Grid item xs={12}>
                     <Grid container spacing={1} justify="space-evenly">
-                        <Paper className="card_form_col" elevation={3}>
+                        <Paper style={styles} elevation={3}>
                             <MCIcon />
                             <TextField
                                 label="Номер карты"
@@ -81,7 +89,7 @@ const ProfileForm = (props) => {
                                 onChange={onDatePickerChangeHandler}
                             />
                         </Paper>
-                        <Paper className="card_form_col" elevation={3}>
+                        <Paper style={styles} elevation={3}>
                             <TextField
                                 label="Имя владельца"
                                 style={{

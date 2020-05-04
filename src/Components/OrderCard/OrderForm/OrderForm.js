@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
     Grid,
     Paper,
@@ -11,29 +10,12 @@ import {
 } from "@material-ui/core";
 import { connect } from "react-redux";
 import { getRouteRequest } from "../../../Store/Route/actions";
-import OrderCancel from "./OrderCancel";
-
-const useStyles = makeStyles((theme) => ({
-    orderForm: {
-        position: "absolute",
-        top: "125px",
-        left: "50px",
-        width: "420px",
-        padding: "35px",
-        textAlign: "center",
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        width: "97%",
-    },
-    btn: {
-        marginTop: "30px",
-        width: "100%",
-    },
-}));
+import useStyles from "../../../Hooks/useOrderCardStyles";
+import OrderCancel from "./OrderCancel/";
+import Loader from "../../Loader/";
 
 const OrderForm = (props) => {
-    const { addresses, getRouteRequest } = props;
+    const { addresses, getRouteRequest, isFetched } = props;
 
     const [from, setFrom] = useState("");
     const [where, setWhere] = useState("");
@@ -41,6 +23,12 @@ const OrderForm = (props) => {
 
     const [fromList, setFromList] = useState(addresses);
     const [whereList, setWhereList] = useState(addresses);
+
+    const classes = useStyles();
+
+    if (!isFetched) {
+        return <Loader />;
+    }
 
     let isDisabled = true;
 
@@ -79,19 +67,12 @@ const OrderForm = (props) => {
         }
     };
 
-    const classes = useStyles();
-
     const onCancelClickHandler = () => {
         setIsOrdered(false);
     };
 
     if (isOrdered) {
-        return (
-            <OrderCancel
-                classes={classes}
-                onCancelClick={onCancelClickHandler}
-            />
-        );
+        return <OrderCancel onCancelClick={onCancelClickHandler} />;
     }
 
     return (
@@ -100,7 +81,13 @@ const OrderForm = (props) => {
                 <Grid item xs={12}>
                     <FormControl className={classes.formControl}>
                         <InputLabel>Откуда</InputLabel>
-                        <Select value={from} onChange={onChangeFromInputHandle}>
+                        <Select
+                            value={from}
+                            onChange={onChangeFromInputHandle}
+                            inputProps={{
+                                "data-testid": "fromInput",
+                            }}
+                        >
                             {fromList.map((address) => {
                                 return (
                                     <MenuItem key={address} value={address}>
@@ -117,6 +104,9 @@ const OrderForm = (props) => {
                         <Select
                             value={where}
                             onChange={onChangeWhereInputHandle}
+                            inputProps={{
+                                "data-testid": "whereInput",
+                            }}
                         >
                             {whereList.map((address) => {
                                 return (
@@ -136,6 +126,7 @@ const OrderForm = (props) => {
                         color="primary"
                         onClick={onClickHandler}
                         disabled={isDisabled}
+                        data-testid="btn"
                     >
                         Вызвать такси
                     </Button>
@@ -148,9 +139,15 @@ const OrderForm = (props) => {
 const mapStateToProps = (state) => {
     return {
         addresses: state.addressList.addresses,
+        isFetched: state.addressList.isFetched,
     };
 };
 
 const mapDispatchToProps = { getRouteRequest };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderForm);
+export const connectedOrderForm = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(OrderForm);
+
+export default OrderForm;

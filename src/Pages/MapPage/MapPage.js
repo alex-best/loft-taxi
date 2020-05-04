@@ -1,14 +1,12 @@
 import React from "react";
-import MainLayout from "../../Layout/MainLayout/MainLayout";
-// import OrderCard from '../../Components/OrderCard/OrderCard';
-import Map from '../../Components/Map/Map';
+import MainLayout from "../../Layout/MainLayout/";
+import Map from '../../Components/Map/';
 
-const MapPage = (props) => {
+const MapPage = () => {
 
     return (
         <MainLayout>
             <Map/>
-            {/* <OrderCard /> */}
         </MainLayout>
     );
 };

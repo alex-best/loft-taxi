@@ -31,7 +31,7 @@ const success = handleActions({
 
 const error = handleActions({
     [regSuccess]: () => null,
-    [regFailure]: (state, action) => action.payload
+    [regFailure]: (state, action) => action.payload.error
 }, null)
 
 const token = handleActions({

@@ -1,6 +1,6 @@
 import React from "react";
-import MainLayout from "../../Layout/MainLayout/MainLayout";
-import ProfileForm from "../../Components/ProfileForm/ProfileForm";
+import MainLayout from "../../Layout/MainLayout/";
+import ProfileForm from "../../Components/ProfileForm/";
 import { Grid, Paper } from "@material-ui/core";
 import { setCardRequest, getCardRequest } from "../../Store/Profile/actions";
 import { connect } from "react-redux";
@@ -44,7 +44,7 @@ const ProfilePage = (props) => {
     };
 
     return (
-        <MainLayout onPageChange={props.onPageChange}>
+        <MainLayout>
             <div className="Profile" style={styles.root}>
                 <Grid item xs={6}>
                     <Grid container>
@@ -83,4 +83,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = { setCardRequest, getCardRequest };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
+export default ProfilePage;
+
+export const connectedProfilePage = connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

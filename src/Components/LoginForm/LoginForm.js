@@ -1,67 +1,73 @@
-import React, { useState } from "react";
-import { TextField, Button } from "@material-ui/core";
-import styles from "../../AppData/regFormStyles";
-import { withStyles } from "@material-ui/core/styles";
+import React from "react";
+import { Button } from "@material-ui/core";
 import PropTypes from "prop-types";
+import { Form, Field } from "react-final-form";
+import Input from '../Input/';
+import useStyles from '../../Hooks/useRegFormStyles';
 
 const LoginForm = (props) => {
 
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const classes = useStyles();
 
-    const submitHandler = (e) => {
-        e.preventDefault();
+    const validate = values => {
+        const errors ={};
+
+        if (values.email) {
+            const match = values.email.match(/^[0-9a-z-\.]+\@[0-9a-z-]{2,}\.[a-z]{2,}$/i);
+            if (!match) {
+                errors.email = 'некорректный email'
+            }
+        }
+
+        return errors;
+    }
+    
+    const handleSubmit = (values) => {
+        const { email, password } = values;
+
         if (email && password) {
             props.onSubmit(email, password);
         }
     };
 
-    const onEmailInputChangeHandler = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const onPasswordInputChangeHandler = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const { classes } = props;
-
     return (
-        <form
-            data-testid="login-form"
-            className={classes.form}
-            onSubmit={submitHandler}
-        >
-            <TextField
-                id="login-username"
-                onChange={onEmailInputChangeHandler}
-                fullWidth={true}
-                margin={"normal"}
-                label="Имя пользователя*"
-            />
-            <TextField
-                id="login-password"
-                onChange={onPasswordInputChangeHandler}
-                fullWidth={true}
-                margin={"normal"}
-                label="Пароль*"
-                type="password"
-            />
-            <Button
-                type="submit"
-                className={classes.button}
-                variant="contained"
-                color="primary"
-                data-testid="submit-btn"
-            >
-                Войти
-            </Button>
-        </form>
+        <Form
+            onSubmit={handleSubmit}
+            validate={validate}
+            render={({handleSubmit}) => (
+                <form data-testid='login-form' onSubmit={handleSubmit} className={classes.form}>
+                    <Field
+                        name="email"
+                        label="Почта"
+                        required={true}
+                        type="email"
+                        dataTestId="email-input"
+                        component={Input}
+                    />
+                    <Field
+                        name="password"
+                        label="Пароль"
+                        required={true}
+                        type="password"
+                        dataTestId="password-input"
+                        component={Input}
+                    />
+                    <Button
+                        type="submit"
+                        className={classes.button}
+                        variant="contained"
+                        color="primary"
+                    >
+                        Войти
+                    </Button>
+                </form>
+            )}
+        />
     );
 };
 
 LoginForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired
-}
+    onSubmit: PropTypes.func.isRequired,
+};
 
-export default withStyles(styles)(LoginForm);
+export default LoginForm;

@@ -3,11 +3,11 @@ import { regRequest } from "../Store/Signup/actions";
 import { getCardRequest, setCardRequest } from '../Store/Profile/actions';
 import { getAddressListRequest } from '../Store/AddressList/actions';
 import { getRouteRequest } from '../Store/Route/actions';
-import { auth, logout } from "./authSaga";
-import { reg } from "./registartionSaga";
-import { getCard, setCard } from './paymentSaga';
-import { getAdressList } from './addressListSaga';
-import { getRoute } from './routeSaga';
+import { auth, logout } from "./auth/authSaga";
+import { reg } from "./registration/registrationSaga";
+import { getCard, setCard } from './payment/paymentSaga';
+import { getAdressList } from './addressList/addressListSaga';
+import { getRoute } from './route/routeSaga';
 import { takeEvery, takeLatest } from "redux-saga/effects";
 
 export function* rootSaga() {
