@@ -1,0 +1,1 @@
+export { connectedProfilePage as ProfilePage } from './ProfilePage';

@@ -1,16 +1,16 @@
 import React from "react";
 import { Grid, Paper } from "@material-ui/core";
 import { Link } from 'react-router-dom';
-import RegLayout from "../../Layout/RegLayout/RegLayout";
-import SignupForm from "../../Components/SignupForm/SignupForm";
+import RegLayout from "../../Layout/RegLayout/";
+import SignupForm from "../../Components/SignupForm/";
 import { connect } from "react-redux";
 import { regRequest } from "../../Store/Signup/actions";
-import styles from "../../AppData/regFormStyles";
-
-import "./SignupPage.css";
+import useStyles from '../../Hooks/useRegFormStyles';
 
 const SignupPage = (props) => {
     const { error, regRequest } = props;
+
+    const classes = useStyles();
 
     const onSubmitHandler = (email, password, name, surname) => {
         regRequest({ email, password, name, surname });
@@ -19,12 +19,12 @@ const SignupPage = (props) => {
     return (
         <RegLayout>
             <Grid container>
-                <Paper style={styles.root}>
+                <Paper className={classes.root}>
                     <Grid item xs={12}>
                         <h2>Зарегистрироваться</h2>
                         <span>
                             Уже зарегистрированы?&nbsp;
-                            <Link style={styles.link} to="/login">Войти</Link>
+                            <Link className={classes.link} to="/login">Войти</Link>
                         </span>
                     </Grid>
                     <Grid item xs={12}>
@@ -38,7 +38,6 @@ const SignupPage = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         isLoggedIn: state.reg.isLoggedIn,
         error: state.reg.error
@@ -47,4 +46,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = { regRequest };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);
+export default SignupPage;
+
+export const connectedSignupPage = connect(mapStateToProps, mapDispatchToProps)(SignupPage);

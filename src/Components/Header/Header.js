@@ -1,28 +1,19 @@
 import React from "react";
-import NavMenu from "./NavMenu/NavMenu";
+import NavMenu from "./NavMenu/";
 import { AppBar, Typography, Toolbar } from "@material-ui/core";
 import { Logo } from "loft-taxi-mui-theme";
-import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
-	root: {
-		flexGrow: 1
-	}
-}
-
-const Header = props => {
-    const { classes } = props;
-
+const Header = () => {
     return (
-        <AppBar position="static" color="default" style={{zIndex: '10'}}>
+        <AppBar position="static" color="default" style={{ zIndex: "10" }}>
             <Toolbar>
-                <Typography className={classes.root}>
+                <Typography style={{ flexGrow: 1 }}>
                     <Logo />
                 </Typography>
-				<NavMenu />
+                <NavMenu />
             </Toolbar>
         </AppBar>
     );
 };
 
-export default withStyles(styles)(Header);
+export default Header;

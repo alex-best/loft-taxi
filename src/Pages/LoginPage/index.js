@@ -1,0 +1,1 @@
+export { connectedLoginPage as LoginPage } from './LoginPage';

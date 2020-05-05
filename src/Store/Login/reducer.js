@@ -32,7 +32,7 @@ const success = handleActions(
     {
         [authSuccess]: () => true,
         [authFailure]: () => false,
-        [authLogout]: () => null,
+        [authLogout]: () => false,
     },
     false
 );
@@ -40,7 +40,7 @@ const success = handleActions(
 const error = handleActions(
     {
         [authSuccess]: () => false,
-        [authFailure]: (state, action) => action.payload,
+        [authFailure]: (state, action) => action.payload.error,
         [authLogout]: () => null,
     },
     null

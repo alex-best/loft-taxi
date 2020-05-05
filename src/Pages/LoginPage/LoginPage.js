@@ -1,15 +1,16 @@
 import React from "react";
 import { Grid, Paper } from "@material-ui/core";
 import { Link } from 'react-router-dom';
-import RegLayout from "../../Layout/RegLayout/RegLayout";
-import LoginForm from "../../Components/LoginForm/LoginForm";
-import styles from "../../AppData/regFormStyles";
+import RegLayout from "../../Layout/RegLayout/";
+import LoginForm from "../../Components/LoginForm/";
 import { connect } from "react-redux";
 import { authRequest } from "../../Store/Login/actions";
-import "./LoginPage.css";
+import useStyles from '../../Hooks/useRegFormStyles';
 
 const LoginPage = (props) => {
     const { error, authRequest } = props;
+
+    const classes = useStyles();
 
     const onSubmitHandler = (email, password) => {
         authRequest({email, password});
@@ -19,11 +20,11 @@ const LoginPage = (props) => {
         <RegLayout>
             <Grid container>
                 <Grid item xs={12}>
-                    <Paper style={styles.root}>
+                    <Paper className={classes.root}>
                         <h2>Войти</h2>
                         <span>
                             Новый пользователь?&nbsp;
-                            <Link style={styles.link} to="/signup">Зарегистрируйтесь</Link>
+                            <Link className={classes.link} to="/signup">Зарегистрируйтесь</Link>
                         </span>
                         { error && <p style={{color: 'red'}}>{error}</p>}
                         <LoginForm onSubmit={onSubmitHandler} />
@@ -43,4 +44,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = { authRequest };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;
+
+export const connectedLoginPage = connect(mapStateToProps, mapDispatchToProps)(LoginPage);

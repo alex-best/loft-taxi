@@ -1,12 +1,10 @@
 import React from "react";
-import LoginPage from "./Pages/LoginPage/LoginPage";
-import SignupPage from "./Pages/SignupPage/SignupPage";
-import MapPage from "./Pages/MapPage/MapPage";
-import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getCardRequest } from "./Store/Profile/actions";
-import { getAddressListRequest } from "./Store/AddressList/actions";
+import { LoginPage } from "./Pages/LoginPage/";
+import { SignupPage } from "./Pages/SignupPage/";
+import { ProfilePage } from "./Pages/ProfilePage/";
+import MapPage from "./Pages/MapPage/";
 
 const App = (props) => {
     const { isLoggedIn } = props;
@@ -36,6 +34,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = { getCardRequest, getAddressListRequest };
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

@@ -1,27 +1,13 @@
 import React from "react";
-import OrderForm from "./OrderForm/OrderForm";
-import Loader from '../Loader/Loader';
+import { OrderForm } from "./OrderForm/";
+import Loader from '../Loader/';
 import { Link } from 'react-router-dom';
 import { Paper, Grid, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import { connect } from 'react-redux'
-
-const useStyles = makeStyles((theme) => ({
-    orderCard: {
-        position: "absolute",
-        top: "125px",
-        left: "50px",
-        width: "420px",
-        padding: "35px",
-        textAlign: 'center'
-    },
-    btn: {
-        marginTop: "30px",
-        width: "100%",
-    },
-}));
+import useStyles from '../../Hooks/useOrderCardStyles';
 
 const OrderCard = (props) => {
+
     const classes = useStyles();
     const { isCardSet, isLoading } = props;
 
@@ -69,4 +55,6 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(OrderCard);
+
+export const connectedOrderCard = connect(mapStateToProps)(OrderCard);
+export default OrderCard;
