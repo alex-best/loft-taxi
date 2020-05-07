@@ -1,6 +1,6 @@
 ## Учебное приложение для заказа такси Loft-Taxi
 
-Это учебное приложение, разработанное на курсе React от LoftSchool <br />
+Учебное приложение, разработанное на курсе React от LoftSchool <br />
 
 ![alt text](screenshots/loft-taxi.png "Loft Taxi")
 
