@@ -7,16 +7,13 @@
 ## Старт проекта:
 
 Склонируйте репозиторий:
-
-### `git clone https://github.com/nbuk/loft-taxi.git`
+##### `git clone https://github.com/nbuk/loft-taxi.git`
 
 Установите записимиости:
-
-### `npm install`
+##### `npm install`
 
 Для запуска:
-
-### `npm start`
+##### `npm start`
 
 Приложение будет доступно по адресу: [http://localhost:3000](http://localhost:3000).
 
